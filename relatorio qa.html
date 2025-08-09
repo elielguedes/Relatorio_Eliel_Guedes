@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório Técnico - Mundo Invest (QA) — Eliel Alves Guedes</title>
+  <style>
+    :root {
+      --primary: #4da3ff;
+      --secondary: #00d4a4;
+      --muted: #a0a0a0;
+      --card: #1e1e2f;
+      --bg: #12121c;
+      --border: #2b2b3c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: #f5f5f5;
+      margin: 0;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #fff;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0.3px;
+    }
+    header p {
+      margin: 6px 0 0;
+      color: rgba(255,255,255,0.9);
+    }
+    main {
+      max-width: 1100px;
+      margin: 22px auto;
+      padding: 20px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+    }
+    h2 {
+      color: var(--primary);
+      margin: 0 0 10px;
+      font-size: 19px;
+    }
+    p.lead { color: var(--muted); margin-top: 0; }
+    ul { margin: 8px 0 0 18px; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .full { grid-column: 1/-1; }
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 18px;
+    }
+    canvas {
+      background: #181828;
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .flowwrap {
+      background: #181828;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .meta { font-size: 13px; color: var(--muted); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: #23233a;
+      color: #fff;
+    }
+    tr:nth-child(even) td {
+      background: #181828;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 18px 0;
+      font-size: 13px;
+    }
+    @media (max-width:880px) {
+      .grid { grid-template-columns: 1fr; }
+      .charts { grid-template-columns: 1fr; }
+      .charts > .flow { order: 2; }
+      .charts > .chart { order: 1; }
+    }
+    .download {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+    .download:hover {
+      background: var(--secondary);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Relatório Técnico — Mundo Invest</h1>
+    <p>Análise QA (Android, iOS e Web) — Eliel Alves Guedes da Silva</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Resumo Executivo</h2>
+      <p class="lead">Avaliação técnica focada em usabilidade, estabilidade, desempenho e segurança. Este documento contém problemas identificados, propostas de correção, cenários de teste e visualizações (gráficos e fluxograma) geradas dinamicamente — prontas para apresentar em processos seletivos.</p>
+      <p class="meta"><strong>Vaga:</strong> Estágio em Qualidade de Software (RETTA — JUL/25) • <strong>Contato:</strong> elielguedes817@gmail.com</p>
+    </section>
+
+    <section class="card grid">
+      <div>
+        <h2>Problemas Identificados</h2>
+        <ul>
+          <li>Tempo de carregamento superior a 4s em Android</li>
+          <li>Crash rate: Android 2.1% / iOS 1.5%</li>
+          <li>Onboarding ineficiente e alta taxa de churn</li>
+          <li>XSS em campo de notas e mensagens genéricas</li>
+          <li>Baixa acessibilidade</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Soluções Prioritárias</h2>
+        <ul>
+          <li>Implementar caching e lazy-loading</li>
+          <li>Corrigir memory leaks</li>
+          <li>Adicionar 2FA e criptografia</li>
+          <li>Padronizar UI com Design System</li>
+          <li>Sanitizar inputs</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card charts full">
+      <div class="chart">
+        <h2>Comparativo — Métricas (Antes → Meta)</h2>
+        <canvas id="metricChart" width="600" height="340"></canvas>
+      </div>
+      <div class="flow">
+        <h2 style="margin-bottom:8px">Fluxograma de Teste: Login</h2>
+        <div class="flowwrap">
+          <svg width="380" height="260" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <style>.s0{fill:#22263a;stroke:#4da3ff;stroke-width:2}.t{font:12px/1.2 Arial,sans-serif;fill:#fff}</style>
+            </defs>
+            <rect x="20" y="10" rx="8" ry="8" width="340" height="40" class="s0"/>
+            <text x="190" y="35" text-anchor="middle" class="t">Início / Abrir App</text>
+            <line x1="190" y1="50" x2="190" y2="85" stroke="#4da3ff" stroke-width="2"/>
+            <rect x="70" y="85" rx="8" ry="8" width="240" height="40" class="s0"/>
+            <text x="190" y="110" text-anchor="middle" class="t">Inserir credenciais</text>
+            <line x1="190" y1="125" x2="190" y2="160" stroke="#4da3ff" stroke-width="2"/>
+            <rect x="20" y="160" rx="8" ry="8" width="340" height="40" class="s0"/>
+            <text x="190" y="185" text-anchor="middle" class="t">Clicar em Entrar → Validação</text>
+            <line x1="190" y1="200" x2="190" y2="230" stroke="#4da3ff" stroke-width="2"/>
+            <rect x="120" y="230" rx="8" ry="8" width="140" height="24" class="s0"/>
+            <text x="190" y="246" text-anchor="middle" class="t">Fim / Acesso</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Cenários de Teste</h2>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Cenário</th><th>Passos</th><th>Resultado Esperado</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>TC-001</td><td>Login válido</td><td>Inserir credenciais → Entrar</td><td>Tela inicial</td><td>Falhou</td></tr>
+          <tr><td>TC-002</td><td>Login biométrico</td><td>Habilitar biometria → Login</td><td>Sucesso</td><td>Falhou</td></tr>
+          <tr><td>TC-003</td><td>XSS em nota</td><td>Inserir script</td><td>Input sanitizado</td><td>Vulnerável</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="text-align:center">
+      <a class="download" id="downloadPdf" href="#">Baixar PDF</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>Relatório técnico criado por <strong>Eliel Alves Guedes da Silva</strong> — 2025</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('metricChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Tempo de Carregamento (s)', 'Crash Rate (%)', 'Taxa de Retenção (%)'],
+        datasets: [
+          { label: 'Android (atual)', data: [4.5, 2.1, 40], backgroundColor: '#4da3ff' },
+          { label: 'iOS (atual)', data: [3.8, 1.5, 55], backgroundColor: '#00d4a4' },
+          { label: 'Meta', data: [2.0, 0.5, 70], backgroundColor: '#ffc107' }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: '#fff' } } },
+        scales: {
+          x: { ticks: { color: '#fff' }, grid: { color: '#2b2b3c' } },
+          y: { beginAtZero: true, ticks: { color: '#fff' }, grid: { color: '#2b2b3c' } }
+        }
+      }
+    });
+    document.getElementById('downloadPdf').addEventListener('click', e => {
+      e.preventDefault();
+      window.print();
+    });
+  </script>
+</body>
+</html>
