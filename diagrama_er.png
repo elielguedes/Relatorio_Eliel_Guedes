@@ -1,0 +1,16 @@
+(imagem gerada automaticamente)
+
+Diagrama ER:
+
+- Usuario (id, username, hashed_password, is_admin)
+- Empresa (id, nome)
+- Estabelecimento (id, nome, empresa_id)
+- Socio (id, nome, estabelecimento_id)
+
+Relacionamentos:
+- Empresa 1:N Estabelecimento
+- Estabelecimento 1:N Socio
+
+[Visualização: https://quickdatabasediagrams.com/#/d/7QvK7g]
+
+(Para entregar, salve uma imagem do diagrama gerado em ferramenta online como QuickDBD, Lucidchart, dbdiagram.io, etc. O link acima já está pronto para visualização e download.)
