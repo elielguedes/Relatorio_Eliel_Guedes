@@ -1,0 +1,53 @@
+{
+  "info": {
+    "name": "API Empresas FastAPI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Registrar Usuário",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"123456\",\n  \"is_admin\": true\n}"},
+        "url": {"raw": "http://localhost:8000/auth/register", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["auth", "register"]}
+      }
+    },
+    {
+      "name": "Login Usuário",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/x-www-form-urlencoded"}],
+        "body": {"mode": "urlencoded", "urlencoded": [
+          {"key": "username", "value": "admin"},
+          {"key": "password", "value": "123456"}
+        ]},
+        "url": {"raw": "http://localhost:8000/auth/login", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["auth", "login"]}
+      }
+    },
+    {
+      "name": "Consultar Usuário Autenticado",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer <token>"}],
+        "url": {"raw": "http://localhost:8000/auth/me", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["auth", "me"]}
+      }
+    },
+    {
+      "name": "Listar Empresas",
+      "request": {
+        "method": "GET",
+        "url": {"raw": "http://localhost:8000/empresas", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["empresas"]}
+      }
+    },
+    {
+      "name": "Criar Empresa",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"nome\": \"Nova Empresa\"\n}"},
+        "url": {"raw": "http://localhost:8000/empresas", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["empresas"]}
+      }
+    }
+  ]
+}

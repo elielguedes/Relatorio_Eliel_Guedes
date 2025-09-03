@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Relatório Técnico QA - Eliel Guedes</title>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Mermaid.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+<style>
+  /* Dark mode básico */
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #e0e0e0;
+  }
+  header {
+    background: #1f2937;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-bottom: 3px solid #3b82f6;
+  }
+  header h1 {
+    margin: 0; font-weight: 700;
+    font-size: 2.5rem;
+    color: #3b82f6;
+  }
+  header p {
+    margin-top: 0.3rem;
+    font-weight: 400;
+    color: #9ca3af;
+  }
+  main {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+  }
+  h2 {
+    color: #3b82f6;
+    border-bottom: 2px solid #3b82f6;
+    padding-bottom: 0.3rem;
+    margin-top: 2.5rem;
+  }
+  section {
+    margin-bottom: 2rem;
+  }
+  ul {
+    list-style: inside disc;
+    line-height: 1.5;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: #1e293b;
+  }
+  th, td {
+    border: 1px solid #374151;
+    padding: 0.75rem;
+  }
+  th {
+    background: #2563eb;
+    color: white;
+  }
+  .btn-toggle {
+    background: #3b82f6;
+    color: #121212;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+  footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #6b7280;
+    border-top: 1px solid #374151;
+  }
+  /* Container gráfico */
+  .chart-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 1rem auto;
+    background: #1e293b;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  /* Mermaid diagram styling */
+  .mermaid {
+    background: #1e293b;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Relatório Técnico - Quality Assurance (QA)</h1>
+  <p>Eliel Guedes - Estágio em Desenvolvimento e Garantia de Qualidade de Software</p>
+</header>
+
+<main>
+  <!-- Seção Introdução -->
+  <section id="introducao">
+    <h2>1. Introdução</h2>
+    <p>
+      Este relatório detalha os problemas identificados, as soluções propostas e os resultados obtidos no processo de Quality Assurance (QA) para garantir a qualidade, segurança e desempenho do software.
+    </p>
+  </section>
+
+  <!-- Seção Análise dos Problemas -->
+  <section id="analise-problemas">
+    <h2>2. Análise dos Problemas Identificados</h2>
+    <ul>
+      <li><strong>Tempo de Carregamento Elevado:</strong> Impacta a experiência e retenção dos usuários.</li>
+      <li><strong>Taxa de Falhas e Erros:</strong> Necessidade de identificar e reduzir falhas críticas.</li>
+      <li><strong>Falhas de Segurança:</strong> Potencial exposição de dados sensíveis.</li>
+      <li><strong>Usabilidade:</strong> Interface pouco intuitiva, dificultando a navegação.</li>
+    </ul>
+  </section>
+
+  <!-- Seção Propostas de Solução -->
+  <section id="propostas-solucoes">
+    <h2>3. Propostas de Solução e Ferramentas Utilizadas</h2>
+    <ul>
+      <li><strong>Otimização de Performance:</strong> Compressão de imagens, minificação de arquivos e análise com <em>Lighthouse</em>.</li>
+      <li><strong>Automação de Testes:</strong> Scripts desenvolvidos em <em>Selenium WebDriver</em> para testes funcionais.</li>
+      <li><strong>Monitoramento de Erros:</strong> Integração com <em>Sentry</em> para captura e análise em tempo real.</li>
+      <li><strong>Melhoria de Usabilidade:</strong> Testes A/B e análise via <em>Google Analytics</em>.</li>
+      <li><strong>Gestão de Bugs:</strong> Organização e acompanhamento por meio do <em>JIRA</em>.</li>
+    </ul>
+  </section>
+
+  <!-- Seção Resultados e Métricas -->
+  <section id="resultados">
+    <h2>4. Resultados e Métricas Obtidas</h2>
+
+    <div class="chart-container">
+      <canvas id="performanceChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="errosChart"></canvas>
+    </div>
+
+    <p>
+      Os gráficos acima demonstram a redução de 30% no tempo médio de carregamento da página principal e a diminuição de 25% na taxa de erros críticos após implementação das soluções.
+    </p>
+  </section>
+
+  <!-- Seção Fluxograma do Processo QA -->
+  <section id="fluxograma">
+    <h2>5. Fluxograma do Processo de QA</h2>
+    <div class="mermaid">
+      graph TD
+        A[Início do Teste] --> B{Funcionalidade OK?}
+        B -- Sim --> C[Teste de Regressão]
+        B -- Não --> D[Reportar Bug no JIRA]
+        D --> E[Correção do Bug]
+        E --> B
+        C --> F[Testes de Performance]
+        F --> G[Testes de Segurança]
+        G --> H[Teste de Usabilidade]
+        H --> I[Fim do Processo]
+    </div>
+  </section>
+
+  <!-- Seção Cenários de Teste -->
+  <section id="cenarios-teste">
+    <h2>6. Cenários de Teste Executados</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cenário</th>
+          <th>Resultado</th>
+          <th>Observações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>CT001</td><td>Login com credenciais válidas</td><td>Sucesso</td><td>Sem erros</td></tr>
+        <tr><td>CT002</td><td>Login com senha inválida</td><td>Falha</td><td>Mensagem de erro exibida</td></tr>
+        <tr><td>CT003</td><td>Navegação no painel principal</td><td>Sucesso</td><td>Fluxo sem interrupções</td></tr>
+        <tr><td>CT004</td><td>Submissão de formulário</td><td>Sucesso</td><td>Dados salvos corretamente</td></tr>
+        <tr><td>CT005</td><td>Logout</td><td>Sucesso</td><td>Sessão encerrada corretamente</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Seção Considerações Finais -->
+  <section id="consideracoes-finais">
+    <h2>7. Considerações Finais</h2>
+    <p>
+      Este relatório demonstra o compromisso com a qualidade e a melhoria contínua, destacando o uso de ferramentas modernas e metodologias ágeis para garantir a excelência do software. Estou motivado a aplicar estes conhecimentos no estágio, contribuindo para o sucesso da equipe.
+    </p>
+  </section>
+<script>
+  // Inicializa Mermaid para renderizar fluxogramas
+  mermaid.initialize({ startOnLoad: true });
+
+  // Dados para o gráfico de performance (tempo de carregamento)
+  const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+  const performanceChart = new Chart(performanceCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Antes', 'Depois'],
+      datasets: [{
+        label: 'Tempo Médio de Carregamento (s)',
+        data: [5.0, 3.5],
+        backgroundColor: ['#2563eb', '#3b82f6'],
+        borderRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      },
+      plugins: {
+        legend: { labels: { color: '#e0e0e0' } },
+      }
+    }
+  });
+
+  // Dados para gráfico de erros críticos
+  const errosCtx = document.getElementById('errosChart').getContext('2d');
+  const errosChart = new Chart(errosCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Erros Após', 'Erros Antes'],
+      datasets: [{
+        label: 'Taxa de Erros Críticos',
+        data: [75, 100],
+        backgroundColor: ['#3b82f6', '#2563eb']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { labels: { color: '#e0e0e0' } },
+      }
+    }
+  });
+</script>
+
+</main>
+
+<footer>
+  <p>Eliel Guedes &copy; 2025</p>
+</footer>
+
+</body>
+</html>
