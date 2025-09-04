@@ -13,7 +13,13 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(
+    tokenUrl="/auth/login",
+    scopes={
+        "admin": "Acesso total: criar, ler, deletar",
+        "leitor": "Acesso somente leitura"
+    }
+)
 
 router = APIRouter()
 
@@ -32,8 +38,9 @@ def get_password_hash(password):
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
+    scopes = data.get("scopes", ["leitor"])
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-    to_encode.update({"exp": expire})
+    to_encode.update({"exp": expire, "scopes": scopes})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 @router.post("/register", response_model=Usuario)
@@ -53,7 +60,8 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     user = db.query(UsuarioModel).filter(UsuarioModel.username == form_data.username).first()
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="Usuário ou senha inválidos")
-    access_token = create_access_token(data={"sub": user.username, "is_admin": user.is_admin})
+    scopes = ["admin"] if bool(user.is_admin) else ["leitor"]
+    access_token = create_access_token(data={"sub": user.username, "is_admin": user.is_admin, "scopes": scopes})
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/me", response_model=Usuario)

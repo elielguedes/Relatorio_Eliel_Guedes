@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import asc, desc
+from typing import Optional
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from app.auth import SECRET_KEY, ALGORITHM
@@ -26,8 +28,28 @@ def create_empresa(empresa: EmpresaCreate, db: Session = Depends(get_db)):
     return create_empresa_service(db, empresa)
 
 @router.get("/", response_model=list[Empresa])
-def read_empresas(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return get_empresas_service(db, skip, limit)
+
+@router.get("/", response_model=list[Empresa])
+def read_empresas(
+    skip: int = 0,
+    limit: int = 10,
+    nome: Optional[str] = None,
+    cnpj: Optional[str] = None,
+    order_by: str = "id",
+    order: str = "asc",
+    db: Session = Depends(get_db)
+):
+    from app.models.models import Empresa
+    query = db.query(Empresa)
+    if nome:
+        query = query.filter(Empresa.nome.like(f"%{nome}%"))
+    if cnpj:
+        query = query.filter(Empresa.cnpj == cnpj)
+    if order_by in ["id", "nome"]:
+        order_column = getattr(Empresa, order_by)
+        query = query.order_by(asc(order_column) if order == "asc" else desc(order_column))
+    empresas = query.offset(skip).limit(limit).all()
+    return empresas
 
 @router.get("/{empresa_id}", response_model=Empresa)
 def read_empresa(empresa_id: int, db: Session = Depends(get_db)):

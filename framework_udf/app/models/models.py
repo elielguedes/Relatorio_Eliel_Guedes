@@ -13,6 +13,7 @@ class Empresa(Base):
     __tablename__ = "empresas"
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String, index=True)
+    cnpj = Column(String, index=True)
     estabelecimentos = relationship("Estabelecimento", back_populates="empresa")
 
 class Estabelecimento(Base):
